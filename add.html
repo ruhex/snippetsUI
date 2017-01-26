@@ -1,0 +1,108 @@
+<html data-ng-app="SnippetsApp">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css">
+        
+        
+        <script src="angular.js"></script>
+        <script src="angular-cookies.js"></script>
+        <script src="jquery-3.1.1.js"></script>
+        <script src="bootstrap/js/bootstrap.js" ></script>     
+        
+        <script src="controllers.js"></script>
+        
+        <script src="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>
+        
+    </head>
+    
+    
+    
+    
+    <body >
+        
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <ul class="nav navbar-nav">        
+                    <li><a href="#">Main page</a></li>
+                    <li><a href="#">Add</a></li>
+                    <li><a href="#">Edit</a></li>
+                    <li><a href="#">Delete</a></li>
+                </ul>
+                
+                
+            </div>
+        </nav>
+        
+        <div class="container" style="margin-top: 100px" data-ng-controller="SendDataCtrl">          
+            
+            <form>
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">ID: </span>
+                    <input ng-model="id" name="id" type="text" class="form-control" id="id" aria-describedby="basic-addon3" disabled>
+                </div>                
+                <br />
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Title: </span>
+                    <input ng-model="title" name="title" type="text" class="form-control" id="title" aria-describedby="basic-addon3">
+                </div>                
+                <br />
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Tags: </span>
+                    <input ng-model="tags" name="tags" type="text" class="form-control" id="tags" aria-describedby="basic-addon3">
+                </div>                
+                <br />
+                
+                <textarea ng-model="description" name="description" id="description" rows="10" cols="80">
+                    This is my textarea to be replaced with CKEditor.
+                </textarea>
+                <br />                         
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Date: </span>
+                    <input ng-model="date" name="date" type="text" class="form-control" id="date" aria-describedby="basic-addon3">
+                </div>
+                
+                <script>
+                    // Replace the <textarea id="editor1"> with a CKEditor
+                    // instance, using default configuration.
+                    //CKEDITOR.replace( 'description' );                   
+                    
+                </script>                
+                
+                <br /><button id="sub" data-ng-click="Submit(id, title, tags, description, date)" type="submit" class="btn btn-default">Submit</button>
+                
+                             
+                
+                
+                
+                <script>
+                   
+                    $(document).ready(function(){
+                        $('#ok').hide();
+                        $('#error').hide();
+                    });
+                </script>
+            </form>
+            
+            
+            
+            
+        </div>
+        
+        
+        <div ng-include="'infoModal.html'" id="modal" class="modal fade">
+            
+        </div>
+        
+
+
+
+    </body>
+</html>

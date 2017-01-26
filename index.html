@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="SnippetsApp">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css">
+        
+        
+        
+        <script language="JavaScript" type="text/javascript" src="cryptico/jsbn.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/random.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/hash.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/rsa.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/aes.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/api.js"></script> 
+        
+        
+        
+        
+        <script src="angular.js"></script>
+        <script src="angular-cookies.js"></script>
+        <script src="jquery-3.1.1.js"></script>
+        <script src="bootstrap/js/bootstrap.js" ></script>     
+        
+        <script src="controllers.js"></script>
+        
+        
+        <script>
+                var PassPhrase = "The Moon is a Harsh Mistress."; 
+            var Bits = 1024; 
+            
+            var MattsRSAkey = cryptico.generateRSAKey(PassPhrase, Bits);
+            
+            
+            var MattsPublicKeyString = cryptico.publicKeyString(MattsRSAkey);  
+            
+            
+            
+            var PlainText = "Matt, I need you to help me with my Starcraft strategy.";
+            
+            var EncryptionResult = cryptico.encrypt(PlainText, MattsPublicKeyString);
+            
+            //alert(EncryptionResult.cipher);
+            
+        </script>
+        
+        
+        
+        
+    </head>
+    <body >
+        
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <ul class="nav navbar-nav">        
+                    <li><a href="#">All snippets</a></li>
+                    <li><a href="#">Tag cloud</a></li>      
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id="login" data-ng-click="ShowModal()" data-toggle="modal" href="#">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        
+        
+   
+            
+            
+    <div data-ng-include="'loginModal.html'" id="modal" class="modal fade"  data-ng-controller="AuthCtrl"></div>
+            
+            
+            
+        
+        <div class="container" style="margin-top: 50px" data-ng-controller="SnippetsCtrl">
+            
+            <div data-ng-repeat="tmp in SnippetsData">
+            
+            <h3><a href="#">{{tmp.title}}</a></h3>
+            
+            <span data-ng-repeat="tmp in tmp.tags"> 
+                    <button type="button" class="btn btn-default btn-xs">{{tmp | chekmark}}</button></span>            
+            <p><pre>{{tmp.description}}</pre>
+            
+            <h4><small><span class="glyphicon glyphicon-time"></span> {{tmp.date}}</small></h4>
+            
+            </div>
+            
+        </div>
+    </body>
+    
+    
+</html>
+
+
+
+
+
+
+
+

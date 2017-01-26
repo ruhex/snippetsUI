@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="FormApp">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script src="angular.js"></script>        
+        <script src="jquery-3.1.1.js"></script>
+        
+        <script language="JavaScript" type="text/javascript" src="cryptico/jsbn.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/random.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/hash.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/rsa.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/aes.js"></script>
+        <script language="JavaScript" type="text/javascript" src="cryptico/api.js"></script>
+        
+    </head>
+    <body >
+        <div>TODO write content</div>
+        
+        <br />
+        <br />
+        
+        <div data-ng-controller="SnippetsCtrl">
+            
+            <h4>{{data}}</h4>
+        <h4>RSA key: {{key}}</h4>
+        <h4>Encryption text: {{keyRSA}}</h4>
+        
+        <br/>
+        
+        <h4>Decrypt text AES-CBC: {{dec}}</h4>
+        <h6>{{ee}}</h6>
+        
+        
+        <textarea ng-model="description" name="description" id="description" rows="10" cols="80">
+                    
+        </textarea>
+        
+        <button id="sub" data-ng-click="Submit(description)" type="submit">Submit</button>
+        
+        
+        
+        </div>
+        
+        
+        
+        <script>
+            var FormApp = angular.module('FormApp', []);
+            FormApp.run(function($rootScope){
+                $rootScope.data = '';
+             });
+            
+           
+            var str = '';
+            
+            FormApp.controller('SnippetsCtrl', function($scope, $rootScope, $http){
+                $http.get('http://localhost:228/key').then(function(response){
+                    $rootScope.data = JSON.stringify(response.data);
+                    
+                $scope.key = response.data.key;
+                
+                
+                var PlainText = "Hello RSA!";
+                $scope.keyRSA = PlainText;
+                
+                var PassPhrase = "The Moon is a Harsh Mistress.";
+                
+                
+                // The length of the RSA key, in bits.
+                //var Bits = 1024; 
+
+                //var MattsRSAkey = cryptico.generateRSAKey(PassPhrase, Bits);
+                
+                //var MattsPublicKeyString = cryptico.publicKeyString(MattsRSAkey);
+               // $scope.ee = MattsPublicKeyString;
+               // var PlainText = "Matt, I need you to help me with my Starcraft strategy.";
+               //alert (response.data.data);
+               var rr = '';
+               
+               $scope.ee = rr;
+                var EncryptionResult = cryptico.encrypt(PlainText, $scope.key);
+                
+                $scope.description = EncryptionResult.cipher;
+                
+                //var DecryptionResult = cryptico.decrypt(EncryptionResult.cipher, MattsRSAkey);
+                //$scope.ee = DecryptionResult;
+                
+                $scope.Submit = function(obj){
+                    var req = {
+                        method: 'POST',
+                        crossDomain : true,
+                        url: 'http://localhost:228/key',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {cipher: obj}
+                    };
+                    
+                    $http(req).then(function(value){
+                       alert('ok' + value); 
+                    });
+                  
+                  
+                  
+                };
+                
+                
+                   
+                });
+                
+               
+                
+                
+                
+                
+            });
+            
+            
+        </script>
+        
+    </body>
+</html>
